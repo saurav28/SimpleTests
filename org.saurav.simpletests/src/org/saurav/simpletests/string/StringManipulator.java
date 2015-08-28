@@ -1,7 +1,12 @@
 package org.saurav.simpletests.string;
 
 import java.io.File;
-
+/**
+ * Basic string manipulation tests.
+ * Just comment and uncomment the specific method required and supply it with the appropriate input
+ * @author Saurav Sarkar
+ *
+ */
 public class StringManipulator {
 	
 	public static void main(String a[]){
