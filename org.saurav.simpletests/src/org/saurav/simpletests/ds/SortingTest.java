@@ -25,9 +25,9 @@ class InsertionSort {
 			Integer value = objArray[i];
 			for(int j=i-1;j>=0;j--){
 				if(objArray[j] > value) {
-					int temp = objArray[j];
-					objArray[j] = value;
-					objArray[j+1] = temp;
+					//int temp = objArray[j];
+					//objArray[j] = value;
+					objArray[j+1] = objArray[j];
 					
 				}
 			}
