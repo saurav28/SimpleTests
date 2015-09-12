@@ -13,7 +13,10 @@ public class SortingTest {
 		for (int i = 0; i < values.length; i++) {
 			valuesarray[i] = Integer.parseInt(values[i]);
 		}
-		InsertionSort sort = new InsertionSort();
+//		InsertionSort sort = new InsertionSort();
+//		sort.sort(valuesarray);
+		
+		SelectionSort sort = new SelectionSort();
 		sort.sort(valuesarray);
 	}
 
@@ -45,8 +48,29 @@ class InsertionSort {
 }
 
 class SelectionSort {
-	public void sort(Object[] objArray){
+	public void sort(Integer[] objArray){
+		for (int i = 0; i < objArray.length-1; i++) {
+			int min = i;
+			for (int j = i+1; j < objArray.length; j++) {
+				if(objArray[min]  > objArray[j]){
+					min = j;
+				}
+			
+			}
+			if(i !=min) {
+			int temp = objArray[i];
+			objArray[i] = objArray[min];
+			objArray[min] = temp;
+			printNumbers(objArray);
+			}
+		}
 		
+	}
+	private void printNumbers(Integer[] objArray) {
+		for (int i = 0; i < objArray.length; i++) {
+			System.out.print(objArray[i]+",");
+		}
+		System.out.println("\n");
 	}
 }
 class QuickSort {
