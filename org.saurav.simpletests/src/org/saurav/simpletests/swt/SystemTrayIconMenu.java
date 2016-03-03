@@ -34,12 +34,13 @@ public class SystemTrayIconMenu {
   public static void main(String[] args) {
     Display display = new Display();
     Shell shell = new Shell(display);
-    Image image = new Image(display, 16, 16);
+    Image image = new Image(display,"C://Test//trayIcon.png");
     final Tray tray = display.getSystemTray();
     if (tray == null) {
       System.out.println("The system tray is not available");
     } else {
       final TrayItem item = new TrayItem(tray, SWT.NONE);
+      final TrayItem item1 = new TrayItem(tray, SWT.NONE);
       item.setToolTipText("SWT TrayItem");
       item.addListener(SWT.Show, new Listener() {
         public void handleEvent(Event event) {
@@ -78,7 +79,13 @@ public class SystemTrayIconMenu {
           menu.setVisible(true);
         }
       });
+      item1.addListener(SWT.MenuDetect, new Listener() {
+          public void handleEvent(Event event) {
+            menu.setVisible(true);
+          }
+        });
       item.setImage(image);
+      item1.setImage(image);
     }
   //  shell.setBounds(50, 50, 300, 200);
 //    shell.open();
