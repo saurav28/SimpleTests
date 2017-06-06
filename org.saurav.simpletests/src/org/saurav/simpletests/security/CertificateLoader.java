@@ -50,14 +50,28 @@ public class CertificateLoader {
 								result.add(alias);
 								System.out.println("Added Certificate with alias " + alias + ". DN: " + x509Certificate.getSubjectDN() + ". CN: " + x509Certificate.getIssuerDN());
 						}
-					} catch (CertificateExpiredException | CertificateNotYetValidException e) {
-						e.printStackTrace();
+					} catch (CertificateExpiredException CE) {
+						CE.printStackTrace();					}
+						catch (CertificateNotYetValidException Cnye) {
+							Cnye.printStackTrace();
 					}
 				}
 
 			}
-		} catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException | NoSuchProviderException e) {
-			System.out.println("Could not get list of available client cert aliases from system" + e);
+		} catch (KeyStoreException  KS){
+			System.out.println("Could not get list of available client cert aliases from system" + KS);
+		}
+		  catch (		NoSuchAlgorithmException NA){
+				System.out.println("Could not get list of available client cert aliases from system" + NA);
+			}
+		catch	(	CertificateException Ce){
+			System.out.println("Could not get list of available client cert aliases from system" + Ce);
+		}
+		catch	(	IOException Ie){
+			System.out.println("Could not get list of available client cert aliases from system" + Ie);
+		}
+		catch	(	NoSuchProviderException Ne) {
+			System.out.println("Could not get list of available client cert aliases from system" + Ne);
 		}
 	}
 }
