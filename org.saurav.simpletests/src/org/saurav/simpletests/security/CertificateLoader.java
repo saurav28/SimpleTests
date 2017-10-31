@@ -23,17 +23,23 @@ import java.util.List;
  */
 public class CertificateLoader {
 	
+	private static String osName = System.getProperty("os.name");
+	
 	public static void main(String a[]){
 		KeyStore systemKeyStore;
 		HashSet<String> result = new HashSet<String>();
-		String keyStoreName = "WINDOWS-MY";
-		String providerName = "SunMSCAPI";
+		//String keyStoreName = "WINDOWS-MY"; //For WIndows
+		//String providerName = "SunMSCAPI";  //For Windows
+		
+		String keyStoreName = "KEYCHAINSTORE"; //For Mac
+		String providerName = "Apple"; //For Mac
 		try {
 			systemKeyStore = KeyStore.getInstance(keyStoreName, providerName);
 			
 			systemKeyStore.load(null, null);
 			
 			Enumeration<String> aliases = systemKeyStore.aliases();
+			
 
 			while (aliases.hasMoreElements()) {
 				String alias = aliases.nextElement();
@@ -74,4 +80,8 @@ public class CertificateLoader {
 			System.out.println("Could not get list of available client cert aliases from system" + Ne);
 		}
 	}
+	
+//	private getOSName(){
+//		
+//	}
 }
