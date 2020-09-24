@@ -2,13 +2,15 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.saurav.simpletests</groupId>
   <artifactId>org.saurav.simpletests</artifactId>
+  <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
    <properties>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>src</testSourceDirectory>
     <resources>
       <resource>
         <directory>src</directory>
@@ -17,8 +19,27 @@
         </excludes>
       </resource>
     </resources>
-  
+    <plugins>
+  	<plugin>
+                
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-surefire-plugin</artifactId>
+       <version>2.19.1</version>
+     
+            </plugin>
+            </plugins>
   </build>
+  <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-bom</artifactId>
+                <version>1.11.837</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
   <dependencies>
   	<dependency>
   		<groupId>
@@ -37,5 +58,59 @@
     <artifactId>rxjava</artifactId>
     <version>2.0.4</version>
 </dependency>
+<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			
+		</dependency>
+		<dependency>
+    <groupId>javax.json</groupId>
+    <artifactId>javax.json-api</artifactId>
+    <version>1.0</version>
+</dependency>
+<dependency>
+    <groupId>org.glassfish</groupId>
+    <artifactId>javax.json</artifactId>
+    <version>1.0.4</version>
+</dependency>
+<dependency>
+    <groupId>org.jsontocsv</groupId>
+    <artifactId>json-to-csv</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</dependency>
+<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+		</dependency>
+	<dependency>
+ <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>3.141.59</version>
+    <exclusions>
+    <exclusion>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+    </exclusion>
+  </exclusions>
+    </dependency>
+     <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-sts</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-iam</artifactId>
+        </dependency>
+         <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-kms</artifactId>
+         </dependency>
   </dependencies>
+  
 </project>
