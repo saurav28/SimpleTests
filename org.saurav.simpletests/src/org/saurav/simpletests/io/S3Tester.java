@@ -32,11 +32,14 @@ import com.amazonaws.services.s3.model.UploadPartRequest;
 import com.amazonaws.services.s3.model.UploadPartResult;
 
 /**
- * Test class to test S3.
+
+ * Test class to test S3 operations.
  * 
- * Generates a file with random bytes and uploads into S3
+ * Right now only testing file uploads both single and multi part upload.
  * 
- * S3 code are token from
+ * For multi part upload a single large file can be sent or set of files in a folder can be pushed as single file
+ * 
+ * S3 code is token from
  * https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/java/example_code/s3/src/main/java/aws/example/s3/LowLevelMultipartUpload.java
  * 
  * @author Saurav Sarkar
