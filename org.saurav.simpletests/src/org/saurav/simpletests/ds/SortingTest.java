@@ -1,13 +1,18 @@
 package org.saurav.simpletests.ds;
 
 import java.io.BufferedReader;
+
 import java.io.InputStreamReader;
+
+
 /**
  *  A test program for different type of sorting algorithms.
- *  Currently supported are insertion, selection and quick sort
- *  Merge , bubble and radix sort are planned for future.
  *  
  *  The quick sort program has been taken from http://java2novice.com/java-sorting-algorithms/quick-sort/
+ *  
+ *  Merge Sort taken from https://www.geeksforgeeks.org/merge-sort/
+ *  
+ *  Counting Sort from  https://www.programiz.com/dsa/counting-sort
  *  
  *  Just uncomment the specific sorting algorithm you want to run
  * @author Saurav Sarkar
@@ -19,7 +24,7 @@ public class SortingTest {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		String[] values = br.readLine().split(" ");
-		Integer[] valuesarray = new Integer[values.length];
+		int[] valuesarray = new int[values.length];
 		for (int i = 0; i < values.length; i++) {
 			valuesarray[i] = Integer.parseInt(values[i]);
 		}
@@ -29,10 +34,54 @@ public class SortingTest {
 //		SelectionSort sort = new SelectionSort();
 //		sort.sort(valuesarray);
 		
-		QuickSort sort = new QuickSort();
+//		QuickSort sort = new QuickSort();
+//		sort.sort(valuesarray);
+		
+		System.out.println("Starting to sort");
+//		MergeSort sort = new MergeSort();
+//		sort.sort(valuesarray, 0,valuesarray.length-1);
+//		System.out.println("\nSorted array");
+//		sort.printNumbers(valuesarray);
+		
+//		
+//		BubbleSort sort = new BubbleSort();
+//		sort.sort(valuesarray);
+//		System.out.println("\nSorted array");
+//		sort.printNumbers(valuesarray);
+		
+		CountingSort sort = new CountingSort();
 		sort.sort(valuesarray);
 	}
 
+}
+
+class BubbleSort {
+	
+	public void sort(int[] objArray) {
+		
+		int length = objArray.length;
+		
+		for(int i = 0; i< length ; i++ ) {
+			for (int j= i+1; j< length ;j++) {
+				if(objArray[i] > objArray[j]) {
+					exchangeNumbers(objArray, i, j);
+				}
+			}
+		}
+	}
+	
+	 private void exchangeNumbers(int[] objArray ,int i, int j) {
+	        int temp = objArray[i];
+	        objArray[i] = objArray[j];
+	        objArray[j] = temp;
+	    }
+	 
+	 void printNumbers(int[] objArray) {
+			for (int i = 0; i < objArray.length; i++) {
+				System.out.print(objArray[i]+",");
+			}
+			System.out.println("\n");
+		}
 }
 
 class InsertionSort {
@@ -151,7 +200,134 @@ class QuickSort {
 	
 }
 class MergeSort {
-	public void sort(Object[] objArray){
+	 void merge(int arr[], int l, int m, int r)
+	    {
+	        // Find sizes of two subarrays to be merged
+	        int n1 = m - l + 1;
+	        int n2 = r - m;
+	 
+	        /* Create temp arrays */
+	        int L[] = new int[n1];
+	        int R[] = new int[n2];
+	 
+	        /*Copy data to temp arrays*/
+	        for (int i = 0; i < n1; ++i)
+	            L[i] = arr[l + i];
+	        for (int j = 0; j < n2; ++j)
+	            R[j] = arr[m + 1 + j];
+	 
+	        /* Merge the temp arrays */
+	 
+	        // Initial indexes of first and second subarrays
+	        int i = 0, j = 0;
+	 
+	        // Initial index of merged subarry array
+	        int k = l;
+	        while (i < n1 && j < n2) {
+	            if (L[i] <= R[j]) {
+	                arr[k] = L[i];
+	                i++;
+	            }
+	            else {
+	                arr[k] = R[j];
+	                j++;
+	            }
+	            k++;
+	        }
+	 
+	        /* Copy remaining elements of L[] if any */
+	        while (i < n1) {
+	            arr[k] = L[i];
+	            i++;
+	            k++;
+	        }
+	 
+	        /* Copy remaining elements of R[] if any */
+	        while (j < n2) {
+	            arr[k] = R[j];
+	            j++;
+	            k++;
+	        }
+	    }
+	 
+	    // Main function that sorts arr[l..r] using
+	    // merge()
+	    void sort(int arr[], int l, int r)
+	    {
+	        if (l < r) {
+	            // Find the middle point
+	            int m =l+ (r-l)/2; // need to find the exact middle point of the bigger array
+	 
+	            // Sort first and second halves
+	            sort(arr, l, m);
+	            sort(arr, m + 1, r);
+	 
+	            // Merge the sorted halves
+	            merge(arr, l, m, r);
+	        }
+	    }
+
+	  
+	   void printNumbers(int[] objArray) {
+			for (int i = 0; i < objArray.length; i++) {
+				System.out.print(objArray[i]+",");
+			}
+			System.out.println("\n");
+		}
+	   
+}
+	   
+class CountingSort {
+	
+	void sort(int arr[]) {
 		
+		int length = arr.length;
+		int max = 0;
+		
+		//finding the max element
+		
+		for (int i = 0; i < length; i++) {
+			if(max < arr[i]) {
+				max = arr[i];
+			}
+		}
+		
+		//initialize the count array with the max element as the range
+		
+		int count[] = new int[max + 1];
+		
+		//store the count of each element
+		
+		for(int i=0 ; i<length ; i++) {
+			count[arr[i]] = count[arr[i]] + 1;
+		}
+		
+		//store the cumulative count
+		
+		for(int i= 1; i <= max; i++) {
+			count[i] = count[i-1] + count[i];
+		}
+		
+		int[] output = new int[length];
+		
+		for(int i = length -1 ; i >=0 ; i--) {
+			output[count[arr[i]] -1] = arr[i];
+			count[arr[i]]--;
+		}
+		
+		for(int i = 0; i < length ; i++) {
+			arr[i] = output[i];
+ 		}
+		
+		printNumbers(arr);
 	}
+	
+	
+	 private void printNumbers(int[] objArray) {
+			for (int i = 0; i < objArray.length; i++) {
+				System.out.print(objArray[i]+",");
+			}
+			System.out.println("\n");
+		}
+	
 }

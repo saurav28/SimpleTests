@@ -5,7 +5,7 @@ package org.saurav.simpletests.ds;
  * Kandane's algorithm can be used in finding brigthest area in a image.
  * https://en.wikipedia.org/wiki/Maximum_subarray_problem
  * 
- * @author i054564
+ * @author saurav.sarkar1@gmail.com
  *
  */
 public class KandaneAlgo {
@@ -20,7 +20,7 @@ public class KandaneAlgo {
 	}
 
 	private static int maxSubArraySum(int[] intArray) {
-		int max_so_far = 0;
+		int max_so_far = 0; //maximum contigous sum so far
 		int max_ending_here = 0;
 		
 		for (int i = 0; i < intArray.length; i++) {

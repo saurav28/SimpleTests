@@ -2,6 +2,7 @@ package org.saurav.simpletests.io;
 
 import java.io.IOException;
 
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -13,7 +14,7 @@ import javax.json.Json;
 import javax.json.JsonReader;
 import javax.json.stream.JsonParser;
 
-import org.saurav.simpletests.Constants;
+
 
 
 
@@ -25,7 +26,7 @@ public class HttpClientTester {
 	public static void main(String args[]) {
 		
 		HttpClientTester httpClient = new HttpClientTester();
-		String url = Constants.URL;
+		String url = " " ; // Constants.URL;
 		//httpClient.executeHttp(url);
 	}
 	

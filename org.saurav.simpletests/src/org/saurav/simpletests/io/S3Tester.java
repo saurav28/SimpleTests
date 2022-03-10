@@ -1,6 +1,7 @@
 package org.saurav.simpletests.io;
 
 import java.io.BufferedOutputStream;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -70,7 +71,7 @@ public class S3Tester {
 		
 		//s3Tester.multiPartStreamUpload(s3Tester.generateRandomFile(fileSize),true);
 		
-		s3Tester.multiPartUploadFromFolderNew("/Users/<xxxxx>/Documents/Work/Temp/s3/testsource");
+		// s3Tester.multiPartUploadFromFolderNew("/Users/<xxxxx>/Documents/Work/Temp/s3/testsource");
 	}
 
 	/**
@@ -248,91 +249,91 @@ public class S3Tester {
 	 * except the last file/part
 	 * @param folderPath
 	 */
-	private void multiPartUploadFromFolderNew(String folderPath) {
-		List<File> files = FilleUtility.listFiles(folderPath);
-		System.out.println("Number of files in the folder " + files.size());
-		for (int i = 0; i < files.size(); i++) {
-
-			if (files.size() - i == 1) {
-				//send the last part as true because this is the last file
-				multiPartStreamUpload("source", files.get(i).getPath(), true, i + 1);
-			} else {
-				multiPartStreamUpload("source", files.get(i).getPath(), false, i + 1);
-			}
-		}
-	}
+//	private void multiPartUploadFromFolderNew(String folderPath) {
+//		List<File> files = FileUtility.listFiles(folderPath);
+//		System.out.println("Number of files in the folder " + files.size());
+//		for (int i = 0; i < files.size(); i++) {
+//
+//			if (files.size() - i == 1) {
+//				//send the last part as true because this is the last file
+//				multiPartStreamUpload("source", files.get(i).getPath(), true, i + 1);
+//			} else {
+//				multiPartStreamUpload("source", files.get(i).getPath(), false, i + 1);
+//			}
+//		}
+//	}
 	
 	
 	/**
 	 *
 	 * @param folderPath
 	 */
-	private void multiPartUploadFromFolder(String folderPath) {
-		
-		List<File> files = FilleUtility.listFiles(folderPath);
-		for (Iterator iterator = files.iterator(); iterator.hasNext();) {
-			File file = (File) iterator.next();
-			
-			
-			long contentLength = file.length();
-			long partSize = 5 * 1024 * 1024; // Set part size to 5 MB.
-			// Create a list of ETag objects. You retrieve ETags for each object part
-			// uploaded,
-			// then, after each individual part has been uploaded, pass the list of ETags to
-			// the request to complete the upload.
-			try {
-				List<PartETag> partETags = new ArrayList<PartETag>();
-
-				// Initiate the multipart upload.
-				InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucketName, folderPath);
-				InitiateMultipartUploadResult initResponse = s3Client.initiateMultipartUpload(initRequest);
-
-				// Upload the file parts.
-				long filePosition = 0;
-				for (int i = 1; filePosition < contentLength; i++) {
-					// Because the last part could be less than 5 MB, adjust the part size as
-					// needed.
-					partSize = Math.min(partSize, (contentLength - filePosition));
-					System.out.println("part size" + partSize);
-					UploadPartRequest uploadRequest = null;
-					// Create the request to upload a part.
-					if(partSize == 5 * 1024 * 1024 ) {
-					uploadRequest = new UploadPartRequest().withBucketName(bucketName).withKey(folderPath)
-							.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
-							.withFile(file).withPartSize(partSize);
-					}else {
-						System.out.println("setting the last part flag");
-						uploadRequest = new UploadPartRequest().withBucketName(bucketName).withKey(folderPath)
-								.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
-								.withFile(file).withPartSize(partSize).withLastPart(true);
-						//is sending is last part mandatory
-						
-					}
-
-					// Upload the part and add the response's ETag to our list.
-					UploadPartResult uploadResult = s3Client.uploadPart(uploadRequest);
-					partETags.add(uploadResult.getPartETag());
-
-					filePosition += partSize;
-				}
-				System.out.println("etags size" + partETags.size());
-				// Complete the multipart upload.
-				CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucketName, folderPath,
-						initResponse.getUploadId(), partETags);
-				s3Client.completeMultipartUpload(compRequest);
-			} catch (AmazonServiceException e) {
-				// The call was transmitted successfully, but Amazon S3 couldn't process
-				// it, so it returned an error response.
-				e.printStackTrace();
-			} catch (SdkClientException e) {
-				// Amazon S3 couldn't be contacted for a response, or the client
-				// couldn't parse the response from Amazon S3.
-				e.printStackTrace();
-			}
-			
-		}
-		
-	}
+//	private void multiPartUploadFromFolder(String folderPath) {
+//		
+//		List<File> files = FilleUtility.listFiles(folderPath);
+//		for (Iterator iterator = files.iterator(); iterator.hasNext();) {
+//			File file = (File) iterator.next();
+//			
+//			
+//			long contentLength = file.length();
+//			long partSize = 5 * 1024 * 1024; // Set part size to 5 MB.
+//			// Create a list of ETag objects. You retrieve ETags for each object part
+//			// uploaded,
+//			// then, after each individual part has been uploaded, pass the list of ETags to
+//			// the request to complete the upload.
+//			try {
+//				List<PartETag> partETags = new ArrayList<PartETag>();
+//
+//				// Initiate the multipart upload.
+//				InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucketName, folderPath);
+//				InitiateMultipartUploadResult initResponse = s3Client.initiateMultipartUpload(initRequest);
+//
+//				// Upload the file parts.
+//				long filePosition = 0;
+//				for (int i = 1; filePosition < contentLength; i++) {
+//					// Because the last part could be less than 5 MB, adjust the part size as
+//					// needed.
+//					partSize = Math.min(partSize, (contentLength - filePosition));
+//					System.out.println("part size" + partSize);
+//					UploadPartRequest uploadRequest = null;
+//					// Create the request to upload a part.
+//					if(partSize == 5 * 1024 * 1024 ) {
+//					uploadRequest = new UploadPartRequest().withBucketName(bucketName).withKey(folderPath)
+//							.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
+//							.withFile(file).withPartSize(partSize);
+//					}else {
+//						System.out.println("setting the last part flag");
+//						uploadRequest = new UploadPartRequest().withBucketName(bucketName).withKey(folderPath)
+//								.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
+//								.withFile(file).withPartSize(partSize).withLastPart(true);
+//						//is sending is last part mandatory
+//						
+//					}
+//
+//					// Upload the part and add the response's ETag to our list.
+//					UploadPartResult uploadResult = s3Client.uploadPart(uploadRequest);
+//					partETags.add(uploadResult.getPartETag());
+//
+//					filePosition += partSize;
+//				}
+//				System.out.println("etags size" + partETags.size());
+//				// Complete the multipart upload.
+//				CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucketName, folderPath,
+//						initResponse.getUploadId(), partETags);
+//				s3Client.completeMultipartUpload(compRequest);
+//			} catch (AmazonServiceException e) {
+//				// The call was transmitted successfully, but Amazon S3 couldn't process
+//				// it, so it returned an error response.
+//				e.printStackTrace();
+//			} catch (SdkClientException e) {
+//				// Amazon S3 couldn't be contacted for a response, or the client
+//				// couldn't parse the response from Amazon S3.
+//				e.printStackTrace();
+//			}
+//			
+//		}
+//		
+//	}
 
 	private void singleUpload() {
 
