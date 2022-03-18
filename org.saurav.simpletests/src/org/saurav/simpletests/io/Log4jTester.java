@@ -6,7 +6,11 @@ import org.apache.logging.log4j.Logger;
 /**
  * Tests the Log4j2 functionality
  * Configuration file log4j2.xml is in /src directory
+<<<<<<< HEAD
  * Keep changing the configuration in log4j2.xml to try out different functionalities of log4j2. 
+=======
+ * Keep changing the configuration in log4j2.xml to try out different functionalities of log4j2.  
+>>>>>>> f9be29bd6ad7f108fa5aadf5d400c3909750b553
  *
  */
 public class Log4jTester {
