@@ -7,6 +7,9 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/*
+ * Checking the hashing or digital digest
+ */
 public class HashingTest {
 
 	public static void main(String a[]) {

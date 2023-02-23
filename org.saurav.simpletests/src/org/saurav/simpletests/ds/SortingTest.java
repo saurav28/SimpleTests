@@ -7,6 +7,10 @@ import java.io.InputStreamReader;
 
 /**
  *  A test program for different type of sorting algorithms.
+
+ *  For now insertion, selection and quick sort are supported.
+ *  Merge , bubble and radix sort are planned for future.
+
  *  
  *  The quick sort program has been taken from http://java2novice.com/java-sorting-algorithms/quick-sort/
  *  
@@ -28,6 +32,7 @@ public class SortingTest {
 		for (int i = 0; i < values.length; i++) {
 			valuesarray[i] = Integer.parseInt(values[i]);
 		}
+
 //		InsertionSort sort = new InsertionSort();
 //		sort.sort(valuesarray);
 		
@@ -49,8 +54,26 @@ public class SortingTest {
 //		System.out.println("\nSorted array");
 //		sort.printNumbers(valuesarray);
 		
-		CountingSort sort = new CountingSort();
-		sort.sort(valuesarray);
+		// CountingSort sort = new CountingSort();
+		// sort.sort(valuesarray);
+
+		if(a[0].isEmpty()){
+			System.out.println("Please provide an input for the type of sort you want to run");
+		}
+		if(a[0].equals("insertion")) {
+					InsertionSort sort = new InsertionSort();
+					sort.sort(valuesarray);
+		}else if(a[0].equals("selection")) {
+					SelectionSort sort = new SelectionSort();
+					sort.sort(valuesarray);
+		}
+		else if(a[0].equals("quick")) {
+			QuickSort sort = new QuickSort();
+			sort.sort(valuesarray);
+		}else {
+			System.out.println("Invalid input");
+		}
+
 	}
 
 }
@@ -85,7 +108,7 @@ class BubbleSort {
 }
 
 class InsertionSort {
-	public void sort(Integer[] objArray){
+	public void sort(int[] objArray){
 		for (int i = 1; i < objArray.length; i++) {
 			Integer value = objArray[i];
 			for(int j=i-1;j>=0;j--){
@@ -101,7 +124,7 @@ class InsertionSort {
 		
 	}
 
-	private void printNumbers(Integer[] objArray) {
+	private void printNumbers(int[] objArray) {
 		for (int i = 0; i < objArray.length; i++) {
 			System.out.print(objArray[i]+",");
 		}
@@ -110,7 +133,7 @@ class InsertionSort {
 }
 
 class SelectionSort {
-	public void sort(Integer[] objArray){
+	public void sort(int[] objArray){
 		for (int i = 0; i < objArray.length-1; i++) {
 			int min = i;
 			for (int j = i+1; j < objArray.length; j++) {
@@ -128,7 +151,7 @@ class SelectionSort {
 		}
 		
 	}
-	private void printNumbers(Integer[] objArray) {
+	private void printNumbers(int[] objArray) {
 		for (int i = 0; i < objArray.length; i++) {
 			System.out.print(objArray[i]+",");
 		}
@@ -136,10 +159,10 @@ class SelectionSort {
 	}
 }
 class QuickSort {
-	private Integer array[];
+	private int array[];
     private int length; 
 	
-	 public void sort(Integer[] inputArr) {
+	 public void sort(int[] inputArr) {
          
 	        if (inputArr == null || inputArr.length == 0) {
 	            return;
@@ -159,8 +182,8 @@ class QuickSort {
 	        while (i <= j) {
 	            /**
 	             * In each iteration, we will identify a number from left side which
-	             * is greater then the pivot value, and also we will identify a number
-	             * from right side which is less then the pivot value. Once the search
+	             * is greater than the pivot value, and also we will identify a number
+	             * from right side which is less than the pivot value. Once the search
 	             * is done, then we exchange both numbers.
 	             */
 	            while (array[i] < pivot) {
@@ -191,7 +214,7 @@ class QuickSort {
 	        array[i] = array[j];
 	        array[j] = temp;
 	    }
-	    private void printNumbers(Integer[] objArray) {
+	    private void printNumbers(int[] objArray) {
 			for (int i = 0; i < objArray.length; i++) {
 				System.out.print(objArray[i]+",");
 			}
